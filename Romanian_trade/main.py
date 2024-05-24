@@ -15,7 +15,6 @@ def main(year):
     wait = WebDriverWait(driver,15)
     dataset = pd.DataFrame()
     calendario = calendar.Calendar()
-    veces = 0 
     driver.get('https://www.opcom.ro/grafice-ip-raportPIP-si-volumTranzactionat/en')
     #acceptando cookies
     try:
@@ -65,9 +64,8 @@ def main(year):
             df = pd.read_html(str(table))[0]
             date = f'{year}-{mes}-{day}'
             df['Date'] = np.array(([date])*(df.shape[0]))
-            if veces== 0 :
+            if len(dataset)== 0 :
                 dataset = df
-                veces+=1
             else:
                 dataset= pd.concat([dataset,df])
         print(f'!!! Mes {mes} escrapeado !!!\nMes {mes} terminado a las: {datetime.datetime.now().strftime("%H:%M")}')
